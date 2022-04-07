@@ -53,9 +53,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # third party apps
+    'debug_toolbar',
+    'drf_yasg',
     'rest_framework',
     'rest_framework.authtoken',
-    'drf_yasg',
 
     # custom apps
     'todo',
@@ -69,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'DrfForTdd.urls'
@@ -155,3 +157,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
+# debug_toolbar
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
