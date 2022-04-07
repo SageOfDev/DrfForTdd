@@ -1,0 +1,6 @@
+secrets.json
+.idea
+db.sqlite3
+*.pyc
+__pycache__
+identifier.sqlite
