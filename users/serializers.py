@@ -1,7 +1,9 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
+from rest_framework.authtoken.models import Token
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
@@ -27,7 +29,7 @@ class UserLoginSerializer(serializers.Serializer):
     password = serializers.CharField(required=True)
 
     default_error_messages = {
-        'inactive_account': '비활성화 된 계정입니다.',
+        'inactive_account': '비활성 계정입니다.',
         'unathorized_account': '인가받지 못한 계정입니다.',
     }
 
@@ -48,3 +50,23 @@ class UserLoginSerializer(serializers.Serializer):
 class TokenSerializer(serializers.ModelSerializer):
     auth_token = serializers.CharField(source='key')
 
+    default_error_messages = {
+        'inactive_account': '비활성 계정입니다.',
+        'unathorized_account': '인가받지 못한 계정입니다.',
+    }
+
+    class Meta:
+        model = Token
+        fields = ["auth_token", "created"]
+
+    def validate(self, data):
+        try:
+            token = data.get("key")
+            user = Token.objects.get(key=token).user
+        except ObjectDoesNotExist:
+            raise serializers.ValidationError(self.error_messages['invalid_credentails'])
+
+        if not user.is_active:
+            raise serializers.ValidationError(self.error_messages['inactive_account'])
+
+        return data
