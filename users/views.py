@@ -42,7 +42,7 @@ class UserLoginAPIView(GenericAPIView):
         )
 
 
-class UserLogoutView(GenericAPIView):
+class UserLogoutAPIView(GenericAPIView):
     lookup_field = "auth_token"
     queryset = Token.objects.all()
     serializer_class = TokenSerializer
