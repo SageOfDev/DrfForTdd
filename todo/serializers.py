@@ -13,7 +13,7 @@ class TodoUserSerializer(ModelSerializer):
 
 
 class TodoSerializer(ModelSerializer):
-    user = TodoUserSerializer(read_only=True)
+    owner = TodoUserSerializer(read_only=True)
 
     class Meta:
         model = Todo
