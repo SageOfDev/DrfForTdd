@@ -147,6 +147,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'statics')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTH_USER_MODEL = 'auth.User'
 
 # DRF setting
 REST_FRAMEWORK = {
