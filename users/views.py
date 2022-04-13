@@ -22,7 +22,7 @@ class UserRegisterAPIView(CreateAPIView):
         data["token"] = token.key
 
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class UserLoginAPIView(GenericAPIView):
@@ -43,7 +43,7 @@ class UserLoginAPIView(GenericAPIView):
 
 
 class UserLogoutAPIView(GenericAPIView):
-    lookup_field = "auth_token"
+    # lookup_field = "auth_token"     # lookup_field는 model의 필드라고 하는데, seiralizer의 필드값을 넣어주는 것이 왜 가능한 것인지 모르겠다.
     queryset = Token.objects.all()
     serializer_class = TokenSerializer
 

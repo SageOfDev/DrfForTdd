@@ -16,7 +16,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         fields = ["id", "username", "email", "password", "confirm_password", "date_joined"]
 
     def validate(self, data):
-        if data.get('password') != data.get('confirm_apssword'):
+        if data.get('password') != data.get('confirm_password'):
             raise serializers.ValidationError("비밀번호가 일치하지 않습니다.")
         del data['confirm_password']
         # `make_password`는 해싱된 암호를 만들어준다. salt나 해시 알고리즘을 선택할 수 있다.
@@ -30,7 +30,7 @@ class UserLoginSerializer(serializers.Serializer):
 
     default_error_messages = {
         'inactive_account': '비활성 계정입니다.',
-        'unathorized_account': '인가받지 못한 계정입니다.',
+        'fail_to_authenticate': '인증에 실패했습니다.',
     }
 
     def __init__(self, *args, **kwargs):
@@ -44,7 +44,7 @@ class UserLoginSerializer(serializers.Serializer):
                 raise serializers.ValidationError(self.error_messages['inactive_account'])
             return data
         else:
-            raise serializers.ValidationError(self.error_messages['invalid_credentials'])
+            raise serializers.ValidationError(self.error_messages['fail_to_authenticate'])
 
 
 class TokenSerializer(serializers.ModelSerializer):
@@ -52,19 +52,20 @@ class TokenSerializer(serializers.ModelSerializer):
 
     default_error_messages = {
         'inactive_account': '비활성 계정입니다.',
-        'unathorized_account': '인가받지 못한 계정입니다.',
+        'invalid_credentials': '존재하지 않는 토큰입니다.',
     }
 
     class Meta:
         model = Token
         fields = ["auth_token", "created"]
 
+    # 로그아웃에서 호출. 로그인시 부여한 토큰과 같은 것인지 확인하는 작업인듯 하다.
     def validate(self, data):
         try:
             token = data.get("key")
             user = Token.objects.get(key=token).user
         except ObjectDoesNotExist:
-            raise serializers.ValidationError(self.error_messages['invalid_credentails'])
+            raise serializers.ValidationError(self.error_messages['invalid_credentials'])
 
         if not user.is_active:
             raise serializers.ValidationError(self.error_messages['inactive_account'])
