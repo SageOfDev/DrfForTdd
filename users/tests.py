@@ -63,11 +63,13 @@ class UserRegistrationAPIViewTestCase(APITestCase):
 
 class UserLoginAPIViewTestCase(APITestCase):
     url = reverse('users:login')
-
+    cnt = 0
     def setUp(self):
         """
         셋업 - 유저 생성
         """
+        UserLoginAPIViewTestCase.cnt += 1
+        print(UserLoginAPIViewTestCase.cnt, "hello")
         self.username = 'loginuser'
         self.email = 'loginuser@loginuser.com'
         self.password = 'loginuser123'
