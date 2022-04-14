@@ -16,11 +16,11 @@ from pathlib import Path
 
 from django.core.exceptions import ImproperlyConfigured
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 secrets_file = BASE_DIR / "secrets.json"
-
 
 with open(secrets_file) as f:
     secrets = json.loads(f.read())
