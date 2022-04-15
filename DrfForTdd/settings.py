@@ -59,7 +59,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
 
     # custom apps
-    'todo',
+    'todo.apps.TodoConfig',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [

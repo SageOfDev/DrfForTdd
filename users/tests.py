@@ -34,7 +34,6 @@ class UserRegistrationAPIViewTestCase(APITestCase):
             'confirm_password': '123123'
         }
         response = self.client.post(self.url, user_data)
-        print(json.loads(response.content))
         self.assertEqual(201, response.status_code)
         self.assertTrue('token' in json.loads(response.content))
 
@@ -63,13 +62,10 @@ class UserRegistrationAPIViewTestCase(APITestCase):
 
 class UserLoginAPIViewTestCase(APITestCase):
     url = reverse('users:login')
-    cnt = 0
     def setUp(self):
         """
         셋업 - 유저 생성
         """
-        UserLoginAPIViewTestCase.cnt += 1
-        print(UserLoginAPIViewTestCase.cnt, "hello")
         self.username = 'loginuser'
         self.email = 'loginuser@loginuser.com'
         self.password = 'loginuser123'
