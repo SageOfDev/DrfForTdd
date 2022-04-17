@@ -1,12 +1,16 @@
 from django.conf import settings
+from django.contrib import admin
 from django.urls import path, include, re_path
 
-from DrfForTdd.admin import admin_site
 from docs.views import schema_view
+
+admin.site.site_header = 'Todo-DRF Admin'
+admin.site.site_title = 'DRF Sample'
+admin.site.index_title = 'TODO-DRF FOR TDD'
 
 urlpatterns = [
     # admin
-    path('admin/', admin_site.urls),
+    path('admin/', admin.site.urls),
 
     # api
     path('users/', include('users.urls')),
