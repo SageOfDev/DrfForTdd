@@ -85,7 +85,7 @@ class UserLoginAPIViewTestCase(APITestCase):
         response = self.client.post(self.url, {'username': self.username, 'password': self.username})
         self.assertEqual(400, response.status_code)
 
-    def test_unique_username_validation(self):
+    def test_authentication_with_valid_data(self):
         """"
         로그인 - 정상 로그인
         """
