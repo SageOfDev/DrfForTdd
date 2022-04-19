@@ -77,7 +77,7 @@ class TodoListCreateAPIViewTestCase(APITestCase):
         """
         리스트 갯수
         """
-        Todo.objects.create(owner=self.user, name="샘플JWT 만들기")
+        Todo.objects.create(owner=self.user, name="샘플TODO 만들기")
         response = self.client.get(self.url)
         self.assertEquals(len(json.loads(response.content)), Todo.objects.count())
 

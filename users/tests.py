@@ -71,14 +71,14 @@ class UserLoginAPIViewTestCase(APITestCase):
         self.password = 'loginuser123'
         self.user = User.objects.create_user(self.username, self.email, self.password)
 
-    def test_authentication_without_passowrd(self):
+    def test_authentication_without_password(self):
         """
         로그인 - 패스워드 없이
         """
         response = self.client.post(self.url, {'username': self.username})
         self.assertEqual(400, response.status_code)
 
-    def test_authentication_with_wrong_passowrd(self):
+    def test_authentication_with_wrong_password(self):
         """
         로그인 - 틀린 패스워드 사용
         """

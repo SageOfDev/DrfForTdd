@@ -8,6 +8,7 @@ from todo.serializers import TodoSerializer
 
 class TodoListCreateAPIView(ListCreateAPIView):
     serializer_class = TodoSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return Todo.objects.filter(owner=self.request.user)

@@ -59,7 +59,7 @@ class TokenSerializer(serializers.ModelSerializer):
         model = Token
         fields = ["auth_token", "created"]
 
-    # 로그아웃에서 호출. 로그인시 부여한 토큰과 같은 것인지 확인하는 작업인듯 하다.
+    # 로그아웃에서 호출. 로그인시 부여한 토큰과 같은 것인지 확인하는 작업.
     def validate(self, data):
         try:
             token = data.get("key")

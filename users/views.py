@@ -42,10 +42,11 @@ class UserLoginAPIView(GenericAPIView):
         )
 
 
+# 로그인 상태라면 토큰이 헤더에 있을 것인데 굳이 바디에 넣으라는 게 이상하다.
 class UserLogoutAPIView(GenericAPIView):
     # lookup_field = "auth_token"     # lookup_field는 model의 필드라고 하는데, seiralizer의 필드값을 넣어주는 것이 왜 가능한 것인지 모르겠다.
     queryset = Token.objects.all()
-    serializer_class = TokenSerializer
+    serializer_class = TokenSerializer  # 없어도 되지 않을까 싶다. Tokenauthetication에서 자동으로 해주지 않을까...?
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
